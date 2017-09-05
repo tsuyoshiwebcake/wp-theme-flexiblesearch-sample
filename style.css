@@ -1,0 +1,104 @@
+@charset "utf-8";
+
+/*
+Theme Name: flexibleSearch
+Theme URI: http://webcake.no003.info/
+Author: Tsuyoshi.
+Author URI: http://webcake.no003.info/
+Description: <a href="https://github.com/tinybeans/jq-plugin-flexibleSearch">flexibleSearch.js</a>を使用するためのサンプルテーマです。
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+/** Reset */
+html, body,
+#wrapper, #header, #header h1 {
+	margin: 0;
+	padding: 0;
+}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	background: url(img/bg.png);
+	font: 14px/1.3 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Arial, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'Meiryo', 'メイリオ', sans-serif;
+}
+
+/** Header */
+#header {
+	background: #333 url(img/head.png);
+	margin-bottom: 15px;
+	font-family: 'Rancho', cursive;
+	font-size: 20px;
+	letter-spacing: 2px;
+	border-bottom: 3px solid #fc0;
+}
+#header h1 {
+	padding: 15px;
+}
+#header a {
+	color: #fff;
+	text-decoration: none;
+}
+#header a: hover {
+	text-decoration: underline;
+}
+
+/** Main */
+#main {
+	padding: 15px;
+}
+
+/** Posts */
+article.post {
+	background: rgba( 230, 230, 230, 0.2 );
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 30px 0px;
+	border-radius: 5px;
+}
+h1.entry-title {
+	border-left: 3px solid #f90;
+	padding-left: 10px;
+	margin-top: 0;
+}
+h1.entry-title a {
+	color: #333;
+}
+h1.entry-title a:hover {
+	text-decoration: none;
+	color: #f00;
+}
+
+/** flexibleSearch */
+#fs-result ul,
+#fs-paginate ul {
+	list-style: none;
+}
+#fs-paginate li {
+	display: inline;
+}
+#fs-paginate a {
+	display: inline-block;
+	margin: 0px 2px!important;
+	padding: 3px;
+	border-radius: 5px;
+	border: 1px solid #d2d2d2;
+	color: #373737;
+	background: #f8f8f8;
+	padding: 5px;
+	font-family: 'Helvetica', sans-serif;
+	-webkit-transition: background 200ms linear;	/* Safari,Chrome */
+	-moz-transition: background 200ms linear;		/* Firefox */
+	-o-transition: background 200ms linear;			/* Opera */
+	transition: background 200ms linear;			/* Other */
+	text-decoration: none;
+}
+
+#fs-paginate a:hover {
+	background: #ebebeb;
+	color: #900;
+}
