@@ -5,6 +5,3 @@
 	<?php wp_footer(); ?>
 </body>
 </html>
-
-</div><!-- #main -->
-</div><!-- #wrapper -->
