@@ -1,104 +1,104 @@
 <?php
 /**
- * flexibleSearchŠÖ˜A‚ÌJSƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ‚Ü‚·
+ * flexibleSearché–¢é€£ã®JSãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿ã¾ã™
  */
 add_action( 'wp_enqueue_scripts', 'hook_wp_enqueue_scripts' );
 if ( ! function_exists( 'hook_wp_enqueue_scripts' ) ) :
- 
-function hook_wp_enqueue_scripts() {   
-	// "mustache.js" ‚Æ "flexibleSearch.min.js" ‚Ì“Ç‚İ‚İ‚Ü‚·
+
+function hook_wp_enqueue_scripts() {
+	// "mustache.js" ã¨ "flexibleSearch.min.js" ã®èª­ã¿è¾¼ã¿ã¾ã™
 	wp_enqueue_script( 'mustache', get_template_directory_uri() . '/js/flexibleSearch/mustache.js', array( 'jquery' ) );
 	wp_enqueue_script( 'flexible-search', get_template_directory_uri() . '/js/flexibleSearch/flexibleSearch.min.js', array( 'jquery' ) );
-	
-	// "flexibleSearch-config.js" ‚Í "(function ($) {" ‚Ì•”•ª‚ğ "jQuery(function ($) {" ‚ÆWordPress—p‚É‘‚«Š·‚¦‚é•K—v‚ª‚ ‚é‚½‚ß¡‰ñ‚Íg—p‚µ‚Ü‚¹‚ñ
+
+	// "flexibleSearch-config.js" ã¯ "(function ($) {" ã®éƒ¨åˆ†ã‚’ "jQuery(function ($) {" ã¨WordPressç”¨ã«æ›¸ãæ›ãˆã‚‹å¿…è¦ãŒã‚ã‚‹ãŸã‚ä»Šå›ã¯ä½¿ç”¨ã—ã¾ã›ã‚“
 	//wp_enqueue_script( 'flexible-search-config', get_template_directory_uri() . '/js/flexibleSearch/flexibleSearch-config.js', array( 'jquery' ) );
 }
- 
+
 endif;
 
 /**
- * ‰üsƒR[ƒh‚Æƒ^ƒO‚Ìœ‹‚µ‚Ü‚·
+ * æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã¨ã‚¿ã‚°ã®é™¤å»ã—ã¾ã™
  */
 if ( ! function_exists( 'del_tags_escapestring' ) ) :
 
 function del_tags_escapestring( $value ) {
 	$value = str_replace( array( "\n","\t" ), "", $value );
 	$value = strip_tags( $value );
-		
+
 	return $value;
 }
 
 endif;
 
 /**
- * flexibleSearch‚ÌŒŸõ—p‚ÌJSONƒtƒ@ƒCƒ‹‚ğ¶¬‚µ‚Ü‚·
- * ‚¨‹CŒy‚É‚¹‚é‚æ‚¤‚ÉinitƒtƒbƒN‚ğg—p‚µ‚Ä‚¢‚Ü‚·‚ªA–{—ˆ‚Í•Ê‚Ìƒ^ƒCƒ~ƒ“ƒO‚ª—Ç‚¢‚Å‚µ‚å‚¤
+ * flexibleSearchã®æ¤œç´¢ç”¨ã®JSONãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™
+ * ãŠæ°—è»½ã«è©¦ã›ã‚‹ã‚ˆã†ã«initãƒ•ãƒƒã‚¯ã‚’ä½¿ç”¨ã—ã¦ã„ã¾ã™ãŒã€æœ¬æ¥ã¯åˆ¥ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ãŒè‰¯ã„ã§ã—ã‚‡ã†
  */
 add_action( 'init', 'hook_init' );
 if ( ! function_exists( 'hook_init' ) ) :
 
 function hook_init() {
 	$items = '';
-	
-	// ŠÇ—‰æ–Ê‚¨‚æ‚ÑAflexibleSearch‚ÌŒŸõŒ‹‰Êƒy[ƒW‚Å‚ÍJSONƒtƒ@ƒCƒ‹‚ğ¶¬‚µ‚Ü‚¹‚ñ
+
+	// ç®¡ç†ç”»é¢ãŠã‚ˆã³ã€flexibleSearchã®æ¤œç´¢çµæœãƒšãƒ¼ã‚¸ã§ã¯JSONãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã—ã¾ã›ã‚“
 	if( is_admin() || isset( $_GET[ 'search' ] ) ) return;
-	
-	// “Šeƒf[ƒ^‚ğ‘SŒæ“¾‚µ‚Ü‚·
+
+	// æŠ•ç¨¿ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å–å¾—ã—ã¾ã™
 	$posts = get_posts( array( 'posts_per_page'  => -1 ) );
 	foreach ( $posts as $post ) {
 		$width = '';
 		$height = '';
-	
-		// –{•¶‚ğæ“¾‚µ‚Ü‚·
+
+		// æœ¬æ–‡ã‚’å–å¾—ã—ã¾ã™
 		$content = apply_filters( 'the_content', $post->post_content );
 		$content = del_tags_escapestring( $content );
-		 
-		// ”²ˆ‚ğæ“¾‚µ‚Ü‚·
+
+		// æŠœç²‹ã‚’å–å¾—ã—ã¾ã™
 		$excerpt = $post->post_excerpt;
 		$excerpt = del_tags_escapestring( $excerpt );
-		
-		// get_the_post_thumbnail‚ğg—p‚·‚é‚Æimgƒ^ƒO‚ğ¶¬‚·‚é‚Ì‚ÅAƒ^ƒO‚ªŒŸõƒL[ƒ[ƒh‚Æ‚µ‚Äˆø‚Á‚©‚©‚Á‚Ä‚µ‚Ü‚¢’ˆÓ‚ª•K—v‚Å‚·
+
+		// get_the_post_thumbnailã‚’ä½¿ç”¨ã™ã‚‹ã¨imgã‚¿ã‚°ã‚’ç”Ÿæˆã™ã‚‹ã®ã§ã€ã‚¿ã‚°ãŒæ¤œç´¢ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã¨ã—ã¦å¼•ã£ã‹ã‹ã£ã¦ã—ã¾ã„æ³¨æ„ãŒå¿…è¦ã§ã™
 		//$image = get_the_post_thumbnail( $post->ID );
-		
-		// ƒAƒCƒLƒƒƒbƒ`‰æ‘œ‚ÌURL‚ğæ“¾‚µ‚Ü‚·
+
+		// ã‚¢ã‚¤ã‚­ãƒ£ãƒƒãƒç”»åƒã®URLã‚’å–å¾—ã—ã¾ã™
 		$image_attributes = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' );
 		$image = '';
 		if ( $image_attributes ) {
 			$image = $image_attributes[0];
-			
-			// •K—v‚É‰‚¶‚Äwitdh‚âheight‘®«‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢
+
+			// å¿…è¦ã«å¿œã˜ã¦witdhã‚„heightå±æ€§ã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„
 			//$width = $image_attributes[1];
 			//$height = $image_attributes[2];
 		}
-		
-		
-		// ƒJƒeƒSƒŠ‚ğæ“¾‚µ‚Ü‚·
+
+
+		// ã‚«ãƒ†ã‚´ãƒªã‚’å–å¾—ã—ã¾ã™
 		$post_categorys = get_the_category( $post->ID );
 		$categorys = '';
 		if ( $post_categorys ) {
 			foreach ( $post_categorys as $category ) {
-				// ƒJƒ“ƒ}‹æØ‚è‚ÅƒJƒeƒSƒŠ‚Ì–¼Ì‚ğ“ü‚ê‚Ü‚·
+				// ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§ã‚«ãƒ†ã‚´ãƒªã®åç§°ã‚’å…¥ã‚Œã¾ã™
 				$categorys = $categorys . $category->name;
 				if ( $category !== end( $post_categorys ) ) {
-					$categorys = $categorys . ','; 
+					$categorys = $categorys . ',';
 				}
 			}
 		}
-		 
-		// ƒ^ƒO‚ğæ“¾‚µ‚Ü‚·
+
+		// ã‚¿ã‚°ã‚’å–å¾—ã—ã¾ã™
 		$post_tags = get_the_tags( $post->ID );
 		$tags = '';
 		if ( $post_tags ) {
 			foreach ( $post_tags as $tag ) {
-				// ƒJƒ“ƒ}‹æØ‚è‚Åƒ^ƒO‚Ì–¼Ì‚ğ“ü‚ê‚Ü‚·
+				// ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§ã‚¿ã‚°ã®åç§°ã‚’å…¥ã‚Œã¾ã™
 				$tags = $tags . $tag->name;
 				if ( $tag !== end( $post_tags ) ) {
-					$tags = $tags . ','; 
+					$tags = $tags . ',';
 				}
 			}
 		}
-		
-		// JSONŒ`®‚Åo—Í‚·‚éƒf[ƒ^‚ğ”z—ñ‚ÉƒZƒbƒg‚µ‚Ü‚·
+
+		// JSONå½¢å¼ã§å‡ºåŠ›ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’é…åˆ—ã«ã‚»ãƒƒãƒˆã—ã¾ã™
 		$items[] = array(
 			'title' => $post->post_title,
 			'excerpt' => $excerpt,
@@ -107,31 +107,31 @@ function hook_init() {
 			'tag' => $tags,
 			'image' => $image,
 			'category' => $categorys,
-			// •K—v‚É‰‚¶‚Äwitdh‚âheight‘®«‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢
+			// å¿…è¦ã«å¿œã˜ã¦witdhã‚„heightå±æ€§ã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„
 			//'width' => $width,
 			//'height' => $height,
 		);
 	}
-		
+
 	$result[ 'items' ] = $items;
-	
-	// wp-content”z‰º‚ÉŒŸõ—p‚ÌJSONƒtƒ@ƒCƒ‹ "flexiblesearch.json" ‚ğ‘‚«o‚µ‚Ü‚·
+
+	// wp-contenté…ä¸‹ã«æ¤œç´¢ç”¨ã®JSONãƒ•ã‚¡ã‚¤ãƒ« "flexiblesearch.json" ã‚’æ›¸ãå‡ºã—ã¾ã™
 	file_put_contents( WP_CONTENT_DIR . '/flexiblesearch.json', json_encode( $result ) );
 }
 
 endif;
 
 /**
- * ƒe[ƒ}‚Ìİ’è‚ğs‚¢‚Ü‚·
+ * ãƒ†ãƒ¼ãƒã®è¨­å®šã‚’è¡Œã„ã¾ã™
  */
 add_action( 'after_setup_theme', 'hook_after_setup_theme' );
 if ( ! function_exists( 'hook_after_setup_theme' ) ) :
 
 	function hook_after_setup_theme() {
-		// ƒAƒCƒLƒƒƒbƒ`‰æ‘œ‚ğg—p‚µ‚Ü‚·
+		// ã‚¢ã‚¤ã‚­ãƒ£ãƒƒãƒç”»åƒã‚’ä½¿ç”¨ã—ã¾ã™
 		add_theme_support( 'post-thumbnails' );
-		
-		// • 220pxA‚‚³ 165pxAØ‚è”²‚«ƒ‚[ƒh‚ÅƒAƒCƒLƒƒƒbƒ`‰æ‘œ‚ÌƒTƒCƒY‚ğw’è‚µ‚Ü‚·
+
+		// å¹… 220pxã€é«˜ã• 165pxã€åˆ‡ã‚ŠæŠœããƒ¢ãƒ¼ãƒ‰ã§ã‚¢ã‚¤ã‚­ãƒ£ãƒƒãƒç”»åƒã®ã‚µã‚¤ã‚ºã‚’æŒ‡å®šã—ã¾ã™
 		set_post_thumbnail_size( 220, 165, true );
-	}	
+	}
 endif;
